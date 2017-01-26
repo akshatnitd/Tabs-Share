@@ -1,0 +1,41 @@
+body {
+	margin: 0px;
+	width: 400px;
+	overflow-x: hidden;
+	font: 12px 'Noto Sans' ,'lucida grande', helvetica, arial, sans-serif;
+}
+
+#main {
+	width: 400px;
+}
+
+#item {
+	width: 335px;
+	clear: both;
+	cursor: pointer;
+	max-height: 20px;
+	background: #fff;
+}
+
+#item {
+	max-height: 25px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#text {
+	max-width: 350px;
+	max-height: 20px;
+	overflow: hidden;
+}
+
+img {
+	float:left;
+	display: inline-block;
+	  width:20px;
+	  height: 20px;
+	  padding-right: 5px;
+	  background-repeat: no-repeat;
+	  background-position: center center;
+	  background-size: cover;
+}
