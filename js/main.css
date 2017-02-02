@@ -13,12 +13,10 @@ body {
 	width: 335px;
 	clear: both;
 	cursor: pointer;
-	max-height: 20px;
 	background: #fff;
 }
 
 #item {
-	max-height: 25px;
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
