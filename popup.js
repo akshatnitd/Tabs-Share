@@ -121,7 +121,7 @@ var z= function ()
         '<div class="panel-heading">'+
         '<h4 class="panel-title">'+
         '<a data-toggle="collapse" data-parent="#saved" href="#collapse'+(l+1)+'">'+"WINDOW "+(l+1)+'</a>'+
-        
+        '<button type="button" id='+(l+1)+' class="btn btn-default btn-xs load_btn"> Load </button>'+
         '<button type="button" id='+(l+1)+' class="btn btn-default btn-xs remove_btn"> Remove </button>'+
         '</h4>'+
         '</div>'+
