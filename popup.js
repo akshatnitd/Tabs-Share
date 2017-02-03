@@ -3,6 +3,8 @@ var b=[];
 var a=[];
 var i,j, str1="", str2="", str3, k,l,m,n, str4="", str5="", str6;
 var save_btns=[];
+var remove_btns=[];
+var load_btns=[];
 
 var x= function() 
 {
@@ -95,6 +97,15 @@ function save_files(clicked_btn)
     }
 }
 
+function remove_files(clicked_btn)
+{
+    var clicked_id=(clicked_btn.toElement.id);
+    
+    localStorage.removeItem("saved_window"+clicked_id);
+    z();
+    
+}
+
 var z= function () 
 {
     var temp1=localStorage.length;
@@ -110,8 +121,8 @@ var z= function ()
         '<div class="panel-heading">'+
         '<h4 class="panel-title">'+
         '<a data-toggle="collapse" data-parent="#saved" href="#collapse'+(l+1)+'">'+"WINDOW "+(l+1)+'</a>'+
-        '<button type="button" id='+(l+1)+' class="btn btn-default btn-xs"> Load </button>'+
-        '<button type="button" id='+(l+1)+' class="btn btn-default btn-xs"> Remove </button>'+
+        
+        '<button type="button" id='+(l+1)+' class="btn btn-default btn-xs remove_btn"> Remove </button>'+
         '</h4>'+
         '</div>'+
         '<div id="collapse'+(l+1)+'" class="panel-collapse collapse in">'+
@@ -153,6 +164,17 @@ setTimeout(function() {
             save_btns[i].addEventListener("click",  function(mouse_event) {    
                 
                 save_files(mouse_event);
+            });
+       }
+
+    remove_btns = $('.remove_btn');
+    
+    for (i = 0; i < remove_btns.length; i++) 
+        {
+            
+            remove_btns[i].addEventListener("click",  function(mouse_event) {    
+                
+                remove_files(mouse_event);
             });
        }
 }, 500);
