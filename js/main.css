@@ -23,15 +23,15 @@ body {
 
 #text {
 	max-width: 350px;
-	max-height: 20px;
+	max-height: 15px;
 	overflow: hidden;
 }
 
 img {
 	float:left;
 	display: inline-block;
-	  width:20px;
-	  height: 20px;
+	  width:15px;
+	  height: 15px;
 	  padding-right: 5px;
 	  background-repeat: no-repeat;
 	  background-position: center center;

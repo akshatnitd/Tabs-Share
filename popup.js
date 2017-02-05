@@ -106,6 +106,25 @@ function remove_files(clicked_btn)
     
 }
 
+
+function load_files(clicked_btn)
+{
+    var clicked_id=(clicked_btn.toElement.id);
+    var saved_windows=[];
+    saved_windows.push( JSON.parse( localStorage.getItem("saved_window"+clicked_id)));
+    
+    var temp2=saved_windows[0].length;
+    var ans=saved_windows[0];
+    var urls=[];
+    for(j=0;j<temp2;j++)
+        {
+            tab=ans[j];
+            var u = tab.url;
+            urls.push(u);
+        }
+        chrome.windows.create({url: urls});   
+}
+
 var z= function () 
 {
     var temp1=localStorage.length;
@@ -175,6 +194,18 @@ setTimeout(function() {
             remove_btns[i].addEventListener("click",  function(mouse_event) {    
                 
                 remove_files(mouse_event);
+            });
+       }
+
+     load_btns = $('.load_btn');
+     console.log(load_btns);
+    
+    for (i = 0; i < load_btns.length; i++) 
+        {
+            
+            load_btns[i].addEventListener("click",  function(mouse_event) {    
+                
+                load_files(mouse_event);
             });
        }
 }, 500);
