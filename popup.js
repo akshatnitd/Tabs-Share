@@ -103,7 +103,6 @@ function remove_files(clicked_btn)
     
     localStorage.removeItem("saved_window"+clicked_id);
     z();
-    
 }
 
 
@@ -163,7 +162,6 @@ var z= function ()
         }
         str4+=str5+'</div>'+'</div>'+'</div>';
     }
-
     document.getElementById('saved').innerHTML=str4;
 };
 
@@ -198,7 +196,6 @@ setTimeout(function() {
        }
 
      load_btns = $('.load_btn');
-     console.log(load_btns);
     
     for (i = 0; i < load_btns.length; i++) 
         {
