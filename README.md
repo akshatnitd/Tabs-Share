@@ -13,4 +13,4 @@ It is utility chrome extension that helps to save and share a list of tabs opene
 	- Click on Load unpacked
 	- Choose the Tab-Share folder and Press OK
 
-Now You have successfully install the extension.
+Now you have successfully installed the extension.
