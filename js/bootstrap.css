@@ -118,6 +118,7 @@ textarea {
   color: inherit;
 }
 button {
+  float: right;
   overflow: visible;
 }
 button,
@@ -1582,6 +1583,8 @@ pre code {
   overflow-y: scroll;
 }
 .container {
+  border-radius: 4px 4px 4px 4px;
+	background-color: #212121;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -4016,13 +4019,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 .nav-tabs {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #424242;
 }
 .nav-tabs > li {
   float: left;
   margin-bottom: -1px;
 }
 .nav-tabs > li > a {
+  color: rgba(126, 206, 182, 0.87);
   margin-right: 2px;
   line-height: 1.42857143;
   border: 1px solid transparent;
@@ -4034,10 +4038,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #555;
+  color: #fff;
   cursor: default;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #424242;
+  border: 1px solid #424242;
   border-bottom-color: transparent;
 }
 .nav-tabs.nav-justified {
@@ -4153,6 +4157,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .tab-content > .tab-pane {
+  color: #fff;
   display: none;
 }
 .tab-content > .active {
@@ -5449,7 +5454,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel {
   margin-bottom: 20px;
-  background-color: #fff;
+  background-color: #424242;
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -5471,7 +5476,7 @@ button.list-group-item-danger.active:focus {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 16px;
-  color: inherit;
+  color: #fff;
 }
 .panel-title > a,
 .panel-title > small,
@@ -5687,7 +5692,7 @@ button.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   color: #333;
-  background-color: #f5f5f5;
+  background-color: #424242;
   border-color: #ddd;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
