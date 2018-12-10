@@ -6,64 +6,6 @@ var save_btns=[];
 var remove_btns=[];
 var load_btns=[];
 
-var count = 0;
-var container = document.getElementsByClassName('container');
-var listGroupItem = document.getElementsByClassName('list-group-item');
-var panelHeading = document.getElementsByClassName('panel-heading');
-var panelTitle = document.getElementsByClassName('panel-title');
-var panel = document.getElementsByClassName('panel');
-var tab_content = document.getElementsByClassName('tab-content');
-var navTab = document.getElementsByClassName('nav-tabs');
-var i;
-document.addEventListener('DOMContentLoaded', function() {
-    var theme = document.getElementById('theme');
-    theme.addEventListener('click', function() {
-        changeTheme();
-    });
-});
-
-function changeTheme(){
-    if(count){
-        for (i = 0; i < listGroupItem.length; i++) {
-            listGroupItem[i].style.backgroundColor = "#424242";
-            listGroupItem[i].style.color = '#fff';
-        }
-        for (i = 0; i < panelHeading.length; i++) {
-            panelHeading[i].style.backgroundColor = "#424242";
-        }
-        for (i = 0; i < panelTitle.length; i++) {
-            panelTitle[i].style.backgroundColor = "#424242";
-            panelTitle[i].style.color = "white";
-        }
-        for (i = 0; i < panel.length; i++) {
-            panel[i].style.backgroundColor = "#424242";
-        }
-        for (i = 0; i < container.length; i++) {
-            container[i].style.backgroundColor = "#212121";
-        }
-        count = 0;
-    }else{
-        for (i = 0; i < listGroupItem.length; i++) {
-            listGroupItem[i].style.backgroundColor = "#fff";
-            listGroupItem[i].style.color = '#000';
-        }
-        for (i = 0; i < panelHeading.length; i++) {
-            panelHeading[i].style.backgroundColor = "#f5f5f5";
-        }
-        for (i = 0; i < panelTitle.length; i++) {
-            panelTitle[i].style.backgroundColor = "#f5f5f5";
-            panelTitle[i].style.color = "black";
-        }
-        for (i = 0; i < panel.length; i++) {
-            panel[i].style.backgroundColor = "#fff";
-        }
-        for (i = 0; i < container.length; i++) {
-            container[i].style.backgroundColor = "#fff";
-        }
-        count = 1;
-    }
-}
-
 var x= function() 
 {
     chrome.windows.getAll(function(win_all)
@@ -121,66 +63,6 @@ var y= function ()
     }
     document.getElementById('current').innerHTML=str1;
 };
-
-
-function save_files(clicked_btn)
-{
-    var clicked_id=parseInt(clicked_btn.toElement.id);
-    
-    var temp=[];
-    var this_win=b[clicked_id-1];
-    
-    var len=this_win.length;
-    
-    for(k=0;k<len;k++)
-    {
-        temp.push(this_win[k]);
-    }
-    var abc=JSON.stringify(temp);
-    var flag=1;
-    for(var i=0;i<localStorage.length;i++)
-    {
-        if(localStorage.getItem("saved_window"+(i+1))==abc)
-        {
-            alert('Already saved! Checkout saved tabs!');
-            flag=0;
-            break;
-        }
-
-    }
-    if(flag==1)
-    {
-        localStorage.setItem("saved_window"+(localStorage.length+1), JSON.stringify(temp));
-        z();
-    }
-}
-
-function remove_files(clicked_btn)
-{
-    var clicked_id=(clicked_btn.toElement.id);
-    
-    localStorage.removeItem("saved_window"+clicked_id);
-    z();
-}
-
-
-function load_files(clicked_btn)
-{
-    var clicked_id=(clicked_btn.toElement.id);
-    var saved_windows=[];
-    saved_windows.push( JSON.parse( localStorage.getItem("saved_window"+clicked_id)));
-    
-    var temp2=saved_windows[0].length;
-    var ans=saved_windows[0];
-    var urls=[];
-    for(j=0;j<temp2;j++)
-        {
-            tab=ans[j];
-            var u = tab.url;
-            urls.push(u);
-        }
-        chrome.windows.create({url: urls});   
-}
 
 var z= function () 
 {
