@@ -1,40 +1,33 @@
-var ans=[];
-var b=[];
-var a=[];
+var all_windows=[];
+var single_window=[];
+var all_tabs=[];
 var i,j, str1="", str2="", str3, k,l,m,n, str4="", str5="", str6;
 var save_btns=[];
 var remove_btns=[];
 var load_btns=[];
 
-var x= function() 
-{
-    chrome.windows.getAll(function(win_all)
-    {
-        win_all.map(function(win)
-        {
-            b=[];
-            chrome.tabs.getAllInWindow(win.id, function(tab_all) 
-            {
-                a=[];
-                tab_all.map(function(tab_each) { 
-                    a.push(tab_each);
+var store_tab = () => {
+    chrome.windows.getAll( (win_all) => {
+        win_all.map( (win) => {
+            single_window=[];
+            chrome.tabs.getAllInWindow(win.id, (tab_all) => {
+                all_tabs=[];
+                tab_all.map( (tab_each) => {
+                    all_tabs.push(tab_each);
                 });
-                b.push(a);
+                single_window.push(all_tabs);
             })
         })
-        ans.push(b);
-
+        all_windows.push(single_window);
     }
 )}
 
 
 
-var y= function () 
-{
-    var temp1=b.length;
+var current_tab_data = () => {
+    var no_of_windows=single_window.length;
 
-    for(i=0;i<temp1;i++)
-    {
+    for(i=0;i<no_of_windows;i++) {
         str1+='<div class="panel panel-default" id="window_'+(i+1)+'" >'+
         '<div class="panel-heading">'+
         '<h4 class="panel-title">'+
@@ -45,11 +38,10 @@ var y= function ()
         '<div id="collapse'+(i+1)+'" class="panel-collapse collapse in">'+
         '<div class="panel-body">';
         str2='';
-        var temp2=b[i].length;
-        var ans=b[i];
-        for(j=0;j<temp2;j++)
-        {
-            tab=ans[j];
+        var no_of_tabs=single_window[i].length;
+        var tabs_in_window=single_window[i];
+        for(j=0;j<no_of_tabs;j++) {
+            tab=tabs_in_window[j];
             var f = tab.favIconUrl, t = tab.title, u = tab.url;
             if (!u) u = '';
             if (!t) t = u;
@@ -64,17 +56,14 @@ var y= function ()
     document.getElementById('current').innerHTML=str1;
 };
 
-var z= function () 
-{
-    var temp1=localStorage.length;
+var saved_tab_data =  () => {
+    var total_windows=localStorage.length;
     var saved_windows=[];
-    for(l=0;l<temp1;l++)
-    {
+    for(l=0;l<total_windows;l++) {
         saved_windows.push( JSON.parse( localStorage.getItem("saved_window"+(l+1)) ));
     }
     str4='';
-    for(l=0;l<temp1;l++)
-    {
+    for(l=0;l<total_windows;l++) {
         str4+='<div class="panel panel-default">'+
         '<div class="panel-heading">'+
         '<h4 class="panel-title">'+
@@ -86,11 +75,10 @@ var z= function ()
         '<div id="collapse'+(l+1)+'" class="panel-collapse collapse in">'+
         '<div class="panel-body">';
         str5='';
-        var temp2=saved_windows[l].length;
-        var ans=saved_windows[l];
-        for(m=0;m<temp2;m++)
-        {
-            tab=ans[m];
+        var no_of_tabs=saved_windows[l].length;
+        var tabs_in_window=saved_windows[l];
+        for(m=0;m<no_of_tabs;m++) {
+            tab=tabs_in_window[m];
             var f = tab.favIconUrl, t = tab.title, u = tab.url;
             if (!u) u = '';
             if (!t) t = u;
@@ -107,42 +95,33 @@ var z= function ()
 
 
 //Function calls
-x();
+store_tab();
 
-setTimeout(function() {
-    y();    
-    z();
+setTimeout( () => {
+    current_tab_data();
+    saved_tab_data();
 
     save_btns = $('.save_btn');
     var mouse_event;
-    for (i = 0; i < save_btns.length; i++) 
-        {
-            
-            save_btns[i].addEventListener("click",  function(mouse_event) {    
-                
-                save_files(mouse_event);
-            });
-       }
+    for (i = 0; i < save_btns.length; i++) {
+        save_btns[i].addEventListener("click", (mouse_event) => {
+            save_files(mouse_event);
+        });
+    }
 
     remove_btns = $('.remove_btn');
     
-    for (i = 0; i < remove_btns.length; i++) 
-        {
-            
-            remove_btns[i].addEventListener("click",  function(mouse_event) {    
-                
-                remove_files(mouse_event);
-            });
-       }
+    for (i = 0; i < remove_btns.length; i++) {
+        remove_btns[i].addEventListener("click", (mouse_event) => {
+            remove_files(mouse_event);
+        });
+    }
 
-     load_btns = $('.load_btn');
+    load_btns = $('.load_btn');
     
-    for (i = 0; i < load_btns.length; i++) 
-        {
-            
-            load_btns[i].addEventListener("click",  function(mouse_event) {    
-                
-                load_files(mouse_event);
-            });
-       }
+    for (i = 0; i < load_btns.length; i++) {
+        load_btns[i].addEventListener("click", (mouse_event) => {
+            load_files(mouse_event);
+        });
+    }
 }, 500);

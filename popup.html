@@ -1,42 +1,42 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>jQuery UI Accordion - Default functionality</title>
-  <link rel="stylesheet" href="./js/bootstrap.css">
-  <link rel="stylesheet" href="./js/main.css">
-  <script src="js/jquery-3.1.1.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="popup.js"></script>
-  <script src="theme.js"></script>
-  <script src="tab_data.js"></script>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Accordion - Default functionality</title>
+    <link rel="stylesheet" href="./js/bootstrap.css">
+    <link rel="stylesheet" href="./js/main.css">
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="popup.js"></script>
+    <script src="theme.js"></script>
+    <script src="tab_data.js"></script>
+  </head>
+  <body>
 
-  <div class="container" id="main">
-    <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home">CURRENT ACTIVE WINDOWS</a></li>
-      <li><a data-toggle="tab" href="#menu1">SAVED WINDOWS</a></li>
-      <li><label class="switch"> 
-            <input type="checkbox" id="theme">
-            <span class="slider round"></span>
-          </label>
-      </li>
-    </ul>
+    <div class="container" id="main">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">CURRENT ACTIVE WINDOWS</a></li>
+        <li><a data-toggle="tab" href="#menu1">SAVED WINDOWS</a></li>
+        <li><label class="switch">
+              <input type="checkbox" id="theme">
+              <span class="slider round"></span>
+            </label>
+        </li>
+      </ul>
 
-    <div class="tab-content">
-      <div id="home" class="tab-pane fade in active">
-        <div class="panel-group" id="current">
-          <!-- Active Windows List -->
+      <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+          <div class="panel-group" id="current">
+            <!-- Active Windows List -->
+          </div>
         </div>
-      </div>
-      <div id="menu1" class="tab-pane fade">
-        <div class="panel-group" id="saved">
-        <!-- Saved Windows List -->
+        <div id="menu1" class="tab-pane fade">
+          <div class="panel-group" id="saved">
+          <!-- Saved Windows List -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
