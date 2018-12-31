@@ -1,14 +1,14 @@
 body 
 {
 	margin: 0px;
-	width: 400px;
+	min-width: 411.5px;
 	overflow-x: hidden;
 	font: 12px 'Noto Sans' ,'lucida grande', helvetica, arial, sans-serif;
 }
 
 #item 
 {
-	width: 335px;
+	width: 167.5px;
 	clear: both;
 	cursor: pointer;
 	background-color:#424242;
@@ -25,19 +25,31 @@ body
 
 img 
 {
-	float:left;
 	display: inline-block;
-	width: 15px;
-	height: 15px;
+	width: 30px;
+	height: 30px;
 	padding-right: 5px;
+	margin-top: 7px;
+	margin-left: 10px;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
 }
 
+.circle
+{
+	border-radius: 50%;
+	background: #fff;
+	margin-left: 30px;
+    width: 45px;
+    height: 45px; 
+}
+
 /* Switch Styling */
 .switch 
-{
+{ 
+	float: right;
+	margin: 0px 0px 0px 11px;
 	position: relative;
 	display: inline-block;
 	width: 30px;
@@ -45,7 +57,7 @@ img
 }
   
 .switch input 
-{ 
+{
 	opacity: 0;
 	width: 0;
 	height: 0;
