@@ -23,10 +23,13 @@
 
 Now you have successfully installed the extension.
 
+## Preview
+<p align="center"><img src="preview/dark.png"></p>
+<p align="center"><img src="preview/light.png"></p>
+
 ### How can I support developers?
 
 - Star our GitHub repo 🌟
 - Create pull requests, [create an issue](https://github.com/njackwinterofcode/Tabs-Share/issues), suggest new features or documentation updates 🔧
 
 <p align="center"> Made with ❤ by <a href="https://github.com/akshatnitd">Akshat Garg</a></p>
-
