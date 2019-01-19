@@ -31,15 +31,19 @@ var current_tab_data = () => {
     for (i = 0; i < no_of_windows; i++) {
         str1 +=
             `<div class="card">
-                <div class="card-header" id="windowHeading_${i + 1}">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#window_${i + 1}" aria-expanded="true" aria-controls="window_${i + 1}">
-                            Window ${i + 1}
-                        </button>
-                        <button type="button" id="${i + 1}" class="btn btn-primary btn-xs save_btn">Save</button>
-                    </h5>
+                <div class="card-header" id="windowActiveHeading_${i + 1}">
+                    <div class="tab-header">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#windowActive_${i + 1}" aria-expanded="false" aria-controls="windowActive_${i + 1}">
+                                Window ${i + 1}
+                            </button>
+                        </h5>
+                        <div>
+                            <button type="button" id="${i + 1}" class="btn btn-primary btn-xs save_btn">Save</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="window_${i + 1}" class="collapse show" aria-labelledby="windowHeading_${i + 1}" data-parent="#accordion">
+                <div id="windowActive_${i + 1}" class="collapse show" aria-labelledby="windowActiveHeading_${i + 1}" data-parent="#accordion">
                     <div class="card-body">`;
         str2 = '';
         var tabs_in_window = single_window[i];
@@ -53,15 +57,9 @@ var current_tab_data = () => {
             // workaround
             if (f == 'chrome://theme/IDR_EXTENSIONS_FAVICON') f = 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAABF0lEQVQoz2P4z4AfMpCgQMfI6LbBZi0mnArCK73f+jyOZMWiQENOU0KHe3N01KuOg/+ZNHg0ZNSZUBSYn7T8aP3B6230y5DX9u8tP5p+suZDURD6IOJV1Mu4FynPE19Ev4x85fvmPweKgrj76c8ykWDkKwtOTVUNHriC5atfLNy2Nf05TEHMS9d9Fh9M98IVvLb5z7c5IOEFTEHy88yrIa+DH8AVmDwy7/BeEwdXkPrsf+3aHXsXwhX4P/V7E/I6+8HpNUCLgAqiX7qw/rf+rwZXkHEj8UXii5aj/1Xv26c+yXwW8SpIAsUX1fvz72c/ir38n8EtO/Fx1Y2ai63yqEEd97/zf///eiDL8X/f/9r/Wf95iI5NALw5DuHmTOHfAAAAAElFTkSuQmCC';
             str3 =
-                `<div class="list-group-item" id="item">
-                    <center>
-                        <div class="circle">
-                            <img src="${f}" />
-                        </div>
-                        <div id="text">
-                            ${t}
-                        </div>
-                    </center>
+                `<div class="tab-item">
+                    <div class="circle"><img src="${f}" /></div>
+                    <div id="tab_name_text">${t}</div>
                 </div>`;
             str2 += str3;
         }
@@ -80,16 +78,20 @@ var saved_tab_data = () => {
     for (l = 0; l < total_windows; l++) {
         str4 +=
             `<div class="card">
-                <div class="card-header" id="windowHeading_${l + 1}">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#window_${l + 1}" aria-expanded="true" aria-controls="window_${l + 1}">
-                            Window ${l + 1}
-                        </button>
-                        <button type="button" id="${l + 1}" class="btn btn-primary btn-xs save_btn">Load</button>
-                        <button type="button" id="${l + 1}" class="btn btn-danger btn-xs save_btn">Remove</button>
-                    </h5>
+                <div class="card-header" id="windowSavedHeading_${l + 1}">
+                    <div class="tab-header">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#windowSaved_${l + 1}" aria-expanded="false" aria-controls="window_${l + 1}">
+                                Window ${l + 1}
+                            </button>
+                        </h5>
+                        <div>
+                            <button type="button" id="${l + 1}" class="btn btn-primary btn-xs save_btn">Load</button>
+                            <button type="button" id="${l + 1}" class="btn btn-danger btn-xs save_btn">Remove</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="window_${l + 1}" class="collapse show" aria-labelledby="windowHeading_${l + 1}" data-parent="#accordion">
+                <div id="windowSaved_${l + 1}" class="collapse show" aria-labelledby="windowSavedHeading_${l + 1}" data-parent="#accordion">
                     <div class="card-body">`;
         str5 = '';
         var no_of_tabs = saved_windows[l].length;
@@ -103,15 +105,11 @@ var saved_tab_data = () => {
             // workaround
             if (f == 'chrome://theme/IDR_EXTENSIONS_FAVICON') f = 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAABF0lEQVQoz2P4z4AfMpCgQMfI6LbBZi0mnArCK73f+jyOZMWiQENOU0KHe3N01KuOg/+ZNHg0ZNSZUBSYn7T8aP3B6230y5DX9u8tP5p+suZDURD6IOJV1Mu4FynPE19Ev4x85fvmPweKgrj76c8ykWDkKwtOTVUNHriC5atfLNy2Nf05TEHMS9d9Fh9M98IVvLb5z7c5IOEFTEHy88yrIa+DH8AVmDwy7/BeEwdXkPrsf+3aHXsXwhX4P/V7E/I6+8HpNUCLgAqiX7qw/rf+rwZXkHEj8UXii5aj/1Xv26c+yXwW8SpIAsUX1fvz72c/ir38n8EtO/Fx1Y2ai63yqEEd97/zf///eiDL8X/f/9r/Wf95iI5NALw5DuHmTOHfAAAAAElFTkSuQmCC';
             str6 =
-                `<div class="list-group-item" id="item">
-                    <center>
-                        <div class="circle">
-                            <img src="${f}" />
-                        </div>
-                        <div id="text">
-                            ${t}
-                        </div>
-                    </center>
+                `<div class="tab-item">
+                    <div class="circle">
+                        <img src="${f}" />
+                    </div>
+                    <div id="tab_name_text">${t}    </div>
                 </div>`;
             str5 += str6;
         }
