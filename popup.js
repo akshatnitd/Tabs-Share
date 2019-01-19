@@ -39,7 +39,7 @@ const createWindowItemHTML = (key, sectionType, tabItemsHTML) => {
                 <div class="tab-header">
                     <h5 class="mb-0">
                         <button class="btn btn-link" data-toggle="collapse" data-target="#window_${sectionType}_${key}" aria-expanded="false" aria-controls="window_${sectionType}_${key}">
-                            Window ${key}
+                            ${sectionType === 'current' ? 'CURRENT' : 'SAVED'} WINDOW ${key}
                         </button>
                     </h5>
                     <div>
@@ -101,27 +101,16 @@ setTimeout(() => {
     currentActiveSectionData();
     savedSectionData();
 
-    save_btns = $('.save_btn');
-    var mouse_event;
-    for (i = 0; i < save_btns.length; i++) {
-        save_btns[i].addEventListener("click", (mouse_event) => {
-            save_files(mouse_event);
-        });
-    }
+    $('.save_btn').on("click", (event) => {
+        saveWindowData(event);
+    });
 
-    remove_btns = $('.remove_btn');
+    $('.remove_btn').on("click", (event) => {
+        removeWindowData(event);
+    });
 
-    for (i = 0; i < remove_btns.length; i++) {
-        remove_btns[i].addEventListener("click", (mouse_event) => {
-            remove_files(mouse_event);
-        });
-    }
+    $('.load_btn').on("click", (event) => {
+        loadWindow(event);
+    });
 
-    load_btns = $('.load_btn');
-
-    for (i = 0; i < load_btns.length; i++) {
-        load_btns[i].addEventListener("click", (mouse_event) => {
-            load_files(mouse_event);
-        });
-    }
 }, 500);
