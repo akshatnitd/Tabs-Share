@@ -1,130 +1,105 @@
-var all_windows = [];
-var single_window = [];
-var all_tabs = [];
-var i, j, str1 = "", str2 = "", str3, k, l, m, n, str4 = "", str5 = "", str6;
 var save_btns = [];
 var remove_btns = [];
 var load_btns = [];
 
-var store_tab = () => {
-    chrome.windows.getAll((win_all) => {
-        win_all.map((win) => {
-            single_window = [];
-            chrome.tabs.getAllInWindow(win.id, (tab_all) => {
-                all_tabs = [];
-                tab_all.map((tab_each) => {
-                    all_tabs.push(tab_each);
-                });
-                single_window.push(all_tabs);
+const initWindowsData = () => {
+    let allWindowsData = [];
+    chrome.windows.getAll((windowData) => {
+        windowData.map((eachWindow) => {
+            chrome.tabs.getAllInWindow(eachWindow.id, (tabs) => {
+                allWindowsData.push(tabs);
             })
-        })
-        all_windows.push(single_window);
+        });
+    });
+    return allWindowsData;
+}
+
+const createTabItemHTML = (title, linkUrl, favicon) => {
+    return (`
+        <a class="tab-item" href = "${linkUrl}">
+            <div class="circle"><img src="${favicon}" /></div>
+            <span id="tab_name_text">${title}</span>
+        </a>
+    `);
+}
+
+const createActionButtonsHTML = (sectionType, key) => {
+    if (sectionType == 'current') {
+        return `<button type="button" id="${key}" class="btn btn-primary btn-xs save_btn">Save</button>`;
+
+    } else if (sectionType === 'saved') {
+        return `<button type="button" id="${key}" class="btn btn-primary btn-xs load_btn">Load</button> <button type="button" id="${key}" class="btn btn-danger btn-xs remove_btn">Remove</button>`;
     }
-    )
+}
+
+const createWindowItemHTML = (key, sectionType, tabItemsHTML) => {
+    return (`
+        <div class="card" >
+            <div class="card-header" id="window_${sectionType}_Heading_${key}">
+                <div class="tab-header">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#window_${sectionType}_${key}" aria-expanded="false" aria-controls="window_${sectionType}_${key}">
+                            Window ${key}
+                        </button>
+                    </h5>
+                    <div>
+                        ${createActionButtonsHTML(sectionType, key)}
+                    </div>
+                </div>
+            </div>
+            <div id="window_${sectionType}_${key}" class="collapse show" aria-labelledby="window_${sectionType}_Heading_${key}" data-parent="#accordion">
+                <div class="card-body">
+                    ${tabItemsHTML}
+                </div>
+            </div>
+        </div>
+    `);
 }
 
 
-
-var current_tab_data = () => {
-    var no_of_windows = single_window.length;
-
-    for (i = 0; i < no_of_windows; i++) {
-        str1 +=
-            `<div class="card">
-                <div class="card-header" id="windowActiveHeading_${i + 1}">
-                    <div class="tab-header">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#windowActive_${i + 1}" aria-expanded="false" aria-controls="windowActive_${i + 1}">
-                                Window ${i + 1}
-                            </button>
-                        </h5>
-                        <div>
-                            <button type="button" id="${i + 1}" class="btn btn-primary btn-xs save_btn">Save</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="windowActive_${i + 1}" class="collapse show" aria-labelledby="windowActiveHeading_${i + 1}" data-parent="#accordion">
-                    <div class="card-body">`;
-        str2 = '';
-        var tabs_in_window = single_window[i];
-        var no_of_tabs = tabs_in_window.length;
-        for (j = 0; j < no_of_tabs; j += 1) {
-            tab = tabs_in_window[j];
-            var f = tab.favIconUrl, t = tab.title, u = tab.url;
-            if (!u) u = '';
-            if (!t) t = u;
-
-            // workaround
-            if (f == 'chrome://theme/IDR_EXTENSIONS_FAVICON') f = 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAABF0lEQVQoz2P4z4AfMpCgQMfI6LbBZi0mnArCK73f+jyOZMWiQENOU0KHe3N01KuOg/+ZNHg0ZNSZUBSYn7T8aP3B6230y5DX9u8tP5p+suZDURD6IOJV1Mu4FynPE19Ev4x85fvmPweKgrj76c8ykWDkKwtOTVUNHriC5atfLNy2Nf05TEHMS9d9Fh9M98IVvLb5z7c5IOEFTEHy88yrIa+DH8AVmDwy7/BeEwdXkPrsf+3aHXsXwhX4P/V7E/I6+8HpNUCLgAqiX7qw/rf+rwZXkHEj8UXii5aj/1Xv26c+yXwW8SpIAsUX1fvz72c/ir38n8EtO/Fx1Y2ai63yqEEd97/zf///eiDL8X/f/9r/Wf95iI5NALw5DuHmTOHfAAAAAElFTkSuQmCC';
-            str3 =
-                `<div class="tab-item">
-                    <div class="circle"><img src="${f}" /></div>
-                    <div id="tab_name_text">${t}</div>
-                </div>`;
-            str2 += str3;
+const createSectionHTML = (allWindowsData, sectionType) => {
+    const noOfWindows = allWindowsData.length;
+    let sectionHTML = '';
+    for (let winIdx = 0; winIdx < noOfWindows; winIdx++) {
+        const windowData = allWindowsData[winIdx];
+        const noOfTabs = windowData.length;
+        let tabItemsHTML = '';
+        for (let tabIdx = 0; tabIdx < noOfTabs; tabIdx++) {
+            const tabData = windowData[tabIdx];
+            const favicon = tabData.favIconUrl;
+            let title = tabData.title, linkUrl = tabData.url;
+            if (!linkUrl) linkUrl = '';
+            if (!title) title = linkUrl;
+            tabItemsHTML += createTabItemHTML(title, linkUrl, favicon);
         }
-        str1 += str2 + '</div></div></div>';
+        sectionHTML += createWindowItemHTML(winIdx + 1, sectionType, tabItemsHTML);
     }
-    document.getElementById('current').innerHTML = str1;
+    return sectionHTML;
+}
+
+
+const currentActiveSectionData = () => {
+    const sectionHTML = createSectionHTML(currentWindowsData, 'current');
+    $('#current #accordion').html(sectionHTML);
 };
 
-var saved_tab_data = () => {
-    var total_windows = localStorage.length;
-    var saved_windows = [];
-    for (l = 0; l < total_windows; l++) {
-        saved_windows.push(JSON.parse(localStorage.getItem("saved_window" + (l + 1))));
+const savedSectionData = () => {
+    const totalSavedWindows = localStorage.length;
+    let savedWindows = [];
+    for (let idx = 0; idx < totalSavedWindows; idx++) {
+        savedWindows.push(JSON.parse(localStorage.getItem("saved_window" + (idx + 1))));
     }
-    str4 = '';
-    for (l = 0; l < total_windows; l++) {
-        str4 +=
-            `<div class="card">
-                <div class="card-header" id="windowSavedHeading_${l + 1}">
-                    <div class="tab-header">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#windowSaved_${l + 1}" aria-expanded="false" aria-controls="window_${l + 1}">
-                                Window ${l + 1}
-                            </button>
-                        </h5>
-                        <div>
-                            <button type="button" id="${l + 1}" class="btn btn-primary btn-xs save_btn">Load</button>
-                            <button type="button" id="${l + 1}" class="btn btn-danger btn-xs save_btn">Remove</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="windowSaved_${l + 1}" class="collapse show" aria-labelledby="windowSavedHeading_${l + 1}" data-parent="#accordion">
-                    <div class="card-body">`;
-        str5 = '';
-        var no_of_tabs = saved_windows[l].length;
-        var tabs_in_window = saved_windows[l];
-        for (m = 0; m < no_of_tabs; m += 1) {
-            tab = tabs_in_window[m];
-            var f = tab.favIconUrl, t = tab.title, u = tab.url;
-            if (!u) u = '';
-            if (!t) t = u;
-
-            // workaround
-            if (f == 'chrome://theme/IDR_EXTENSIONS_FAVICON') f = 'data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAABF0lEQVQoz2P4z4AfMpCgQMfI6LbBZi0mnArCK73f+jyOZMWiQENOU0KHe3N01KuOg/+ZNHg0ZNSZUBSYn7T8aP3B6230y5DX9u8tP5p+suZDURD6IOJV1Mu4FynPE19Ev4x85fvmPweKgrj76c8ykWDkKwtOTVUNHriC5atfLNy2Nf05TEHMS9d9Fh9M98IVvLb5z7c5IOEFTEHy88yrIa+DH8AVmDwy7/BeEwdXkPrsf+3aHXsXwhX4P/V7E/I6+8HpNUCLgAqiX7qw/rf+rwZXkHEj8UXii5aj/1Xv26c+yXwW8SpIAsUX1fvz72c/ir38n8EtO/Fx1Y2ai63yqEEd97/zf///eiDL8X/f/9r/Wf95iI5NALw5DuHmTOHfAAAAAElFTkSuQmCC';
-            str6 =
-                `<div class="tab-item">
-                    <div class="circle">
-                        <img src="${f}" />
-                    </div>
-                    <div id="tab_name_text">${t}    </div>
-                </div>`;
-            str5 += str6;
-        }
-        str4 += str5 + '</div></div></div>';
-    }
-    document.getElementById('saved').innerHTML = str4;
+    const sectionHTML = createSectionHTML(savedWindows, 'saved');
+    $('#saved #accordion').html(sectionHTML);
 };
 
 
 //Function calls
-store_tab();
+let currentWindowsData = initWindowsData();
 
 setTimeout(() => {
-    current_tab_data();
-    saved_tab_data();
+    currentActiveSectionData();
+    savedSectionData();
 
     save_btns = $('.save_btn');
     var mouse_event;
