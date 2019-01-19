@@ -47,7 +47,7 @@ const createWindowItemHTML = (key, sectionType, tabItemsHTML) => {
                     </div>
                 </div>
             </div>
-            <div id="window_${sectionType}_${key}" class="collapse show" aria-labelledby="window_${sectionType}_Heading_${key}" data-parent="#accordion">
+            <div id="window_${sectionType}_${key}" class="collapse" aria-labelledby="window_${sectionType}_Heading_${key}" data-parent="#accordion">
                 <div class="card-body">
                     ${tabItemsHTML}
                 </div>
